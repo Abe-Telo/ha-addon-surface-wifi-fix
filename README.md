@@ -1,31 +1,32 @@
-# Surface WiFi Fix Home Assistant Add-on
+# Surface WiFi Fix Home Assistant Add-on Repository
 
-This add-on is designed for Home Assistant OS running on Microsoft Surface devices
-using the Marvell/mwifiex WiFi chipset. It disables WiFi power saving on boot to
-reduce random disconnects and timeouts.
+This repository hosts a custom Home Assistant Supervisor add-on that disables Wi-Fi power saving on Microsoft Surface devices running Home Assistant OS.
 
-## Features
+## Add-on Contents
 
-- Runs on HAOS as a Supervisor add-on
-- Uses `iw` and `iwconfig` to turn off WiFi power saving on interface `wlp3s0`
-- Starts automatically on system boot
-- Requires `host_network: true` and `NET_ADMIN` privileges
+The add-on lives in `surface_wifi_fix/` and includes:
 
-## Installation
+- `config.json` — Home Assistant add-on manifest configured for automatic startup with host networking and `NET_ADMIN` privileges.
+- `Dockerfile` — Builds from the Home Assistant base image and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras`.
+- `run.sh` — Applies Wi-Fi power-save fixes to `wlp3s0` (or a user-specified interface) and keeps the container alive.
+- `README.md` — Usage instructions for the add-on itself.
 
-1. In Home Assistant, go to **Settings → Add-ons → Add-on Store**.
+## Installation in Home Assistant
+
+1. In Home Assistant, open **Settings → Add-ons → Add-on Store**.
 2. Click the three dots (⋮) → **Repositories**.
-3. Add this repo URL: `https://github.com/YOUR_GITHUB/ha-addon-surface-wifi-fix`.
-4. Click **Add**, then search for **Surface WiFi Fix** in the add-on list.
-5. Install the add-on.
-6. Open the add-on page:
-   - Enable **Start on boot**
-   - Enable **Watchdog** (optional)
-   - Click **Start**.
+3. Add this repository URL: `https://github.com/YOUR_GITHUB/ha-addon-surface-wifi-fix`.
+4. After the repository refreshes, install **Surface WiFi Fix**.
+5. On the add-on page, enable **Start on boot** and optionally enable **Watchdog**.
+6. Click **Start** to apply the fix.
 
-## Verification
+## Verifying the Fix
 
 1. SSH to the HAOS host (or use the Terminal & SSH add-on).
 2. Run:
    ```sh
    iwconfig wlp3s0
+   ```
+3. Confirm the output shows `Power Management:off` for the interface.
+
+If your Wi-Fi interface is not `wlp3s0`, set the `WIFI_INTERFACE` environment variable in the add-on options and restart the add-on.

@@ -9,7 +9,11 @@
   "host_network": true,
   "privileged": ["NET_ADMIN"],
   "init": false,
-  "options": {},
-  "schema": {},
+  "options": {
+    "wifi_interface": "wlp3s0"
+  },
+  "schema": {
+    "wifi_interface": "str?"
+  },
   "image": null
 }

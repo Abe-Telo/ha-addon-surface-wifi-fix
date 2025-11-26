@@ -1,6 +1,15 @@
 #!/bin/sh
 
-IFACE="${WIFI_INTERFACE:-wlp3s0}"
+IFACE_DEFAULT="wlp3s0"
+IFACE="${WIFI_INTERFACE:-${IFACE_DEFAULT}}"
+
+# Prefer the Supervisor options file when available
+if [ -r /data/options.json ]; then
+  OPTION_IFACE=$(jq -er '.wifi_interface // empty' /data/options.json 2>/dev/null || true)
+  if [ -n "${OPTION_IFACE}" ]; then
+    IFACE="${OPTION_IFACE}"
+  fi
+fi
 
 echo "Surface WiFi Fix: starting up, target interface: ${IFACE}"
 

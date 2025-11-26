@@ -5,6 +5,7 @@ RUN apk add --no-cache \
     wireless-tools \
     iw \
     ethtool \
+    jq \
     busybox-extras
 
 COPY run.sh /run.sh

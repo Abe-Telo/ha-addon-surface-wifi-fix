@@ -1,0 +1,15 @@
+{
+  "name": "Surface WiFi Fix",
+  "version": "1.0.0",
+  "slug": "surface_wifi_fix",
+  "description": "Disables WiFi power saving on Surface devices running HAOS",
+  "arch": ["amd64"],
+  "startup": "services",
+  "boot": "auto",
+  "host_network": true,
+  "privileged": ["NET_ADMIN"],
+  "init": false,
+  "options": {},
+  "schema": {},
+  "image": null
+}

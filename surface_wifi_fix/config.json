@@ -1,6 +1,6 @@
 {
   "name": "Surface WiFi Fix",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "slug": "surface_wifi_fix",
   "description": "Disables WiFi power saving on Surface devices running HAOS",
   "url": "https://github.com/Abe-Telo/ha-addon-surface-wifi-fix/tree/main/surface_wifi_fix",

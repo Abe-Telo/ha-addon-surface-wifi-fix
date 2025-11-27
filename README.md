@@ -8,6 +8,7 @@ The add-on lives in `surface_wifi_fix/` and includes:
 
 - `config.json` — Home Assistant add-on manifest configured for automatic startup with host networking and `NET_ADMIN` privileges.
 - `Dockerfile` — Builds from the Home Assistant base image and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras`.
+- `build.json` — Maps Supervisor-provided base images per architecture so the add-on is valid on amd64, aarch64, armv7, and armhf installs.
 - `run.sh` — Applies Wi-Fi power-save fixes to `wlp3s0` (or a user-specified interface) and keeps the container alive.
 - `README.md` — Usage instructions for the add-on itself.
 
@@ -27,7 +28,7 @@ The add-on lives in `surface_wifi_fix/` and includes:
 - Confirm the repository URL is exactly `https://github.com/Abe-Telo/ha-addon-surface-wifi-fix` in **Settings → Add-ons → Add-on Store → ⋮ → Repositories**.
 - Use **⋮ → Reload** in the Add-on Store after adding the repository to force a refresh.
 - Check **Settings → System → Logs → Supervisor** for repository sync errors; retries can take a couple of minutes if your internet connection is slow.
-- The add-on uses multi-architecture build settings so it should render in the list once the repository sync succeeds.
+- The add-on uses multi-architecture build settings (with `build.json` and the Supervisor base image matrix) so it should render in the list once the repository sync succeeds.
 
 ## Verifying the Fix
 

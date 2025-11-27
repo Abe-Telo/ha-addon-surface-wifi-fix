@@ -4,7 +4,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 
 ## How It Works
 
-- Builds from the Supervisor-provided base image for your architecture (`ghcr.io/home-assistant/{arch}-base:3.19`) and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
+- Builds from the Supervisor-provided base image for your architecture (`ghcr.io/home-assistant/{arch}-base:16.3`, defined in `build.json`) and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
 - Runs `run.sh` at startup, which waits for the Wi-Fi interface, applies `iw dev <iface> set power_save off` and `iwconfig <iface> power off`, then stays running.
 - Uses `host_network: true` and `NET_ADMIN` privileges so it can manage the host Wi-Fi interface from inside the add-on container.
 
@@ -20,7 +20,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 3. Enable **Start on boot** and optionally **Watchdog**.
 4. Click **Start**.
 
-If the repository syncs but you still do not see the add-on, use **⋮ → Reload** in the Add-on Store, then check **Settings → System → Logs → Supervisor** for any repository fetch errors.
+If the repository syncs but you still do not see the add-on, use **⋮ → Reload** in the Add-on Store, then check **Settings → System → Logs → Supervisor** for any repository fetch errors. A missing or invalid `build.json` can prevent the repository from listing.
 
 ## Verification
 
@@ -32,4 +32,5 @@ If the repository syncs but you still do not see the add-on, use **⋮ → Reloa
 
 - `config.json` — Add-on manifest (auto start, services stage, host networking, `NET_ADMIN`).
 - `Dockerfile` — Base image and tool installation.
+- `build.json` — Architecture-specific base images supplied to the Docker build.
 - `run.sh` — Wi-Fi power-save disable script with retry loop and idle tail.

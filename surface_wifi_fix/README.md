@@ -4,7 +4,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 
 ## How It Works
 
-- Builds from `ghcr.io/home-assistant/amd64-base:3.19` and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
+- Builds from the Supervisor-provided base image for your architecture (`ghcr.io/home-assistant/{arch}-base:3.19`) and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
 - Runs `run.sh` at startup, which waits for the Wi-Fi interface, applies `iw dev <iface> set power_save off` and `iwconfig <iface> power off`, then stays running.
 - Uses `host_network: true` and `NET_ADMIN` privileges so it can manage the host Wi-Fi interface from inside the add-on container.
 
@@ -19,6 +19,8 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 2. Install **Surface WiFi Fix** from the add-on list.
 3. Enable **Start on boot** and optionally **Watchdog**.
 4. Click **Start**.
+
+If the repository syncs but you still do not see the add-on, use **⋮ → Reload** in the Add-on Store, then check **Settings → System → Logs → Supervisor** for any repository fetch errors.
 
 ## Verification
 

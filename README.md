@@ -22,6 +22,13 @@ The add-on lives in `surface_wifi_fix/` and includes:
 
 > **Tip:** The add-on will only appear in the store if your Home Assistant hardware matches one of the supported architectures (AMD64, AArch64, ARMv7, or ARMhf). Make sure your system is on one of these platforms when browsing the repository. Intel-based 64-bit CPUs (like the Surface Book 1) use the AMD64 architecture and are supported. If the add-on list looks empty after adding the repository, click the **⋮ → Reload** option in the Add-on Store to refresh.
 
+### Troubleshooting visibility
+
+- Confirm the repository URL is exactly `https://github.com/Abe-Telo/ha-addon-surface-wifi-fix` in **Settings → Add-ons → Add-on Store → ⋮ → Repositories**.
+- Use **⋮ → Reload** in the Add-on Store after adding the repository to force a refresh.
+- Check **Settings → System → Logs → Supervisor** for repository sync errors; retries can take a couple of minutes if your internet connection is slow.
+- The add-on uses multi-architecture build settings so it should render in the list once the repository sync succeeds.
+
 ## Verifying the Fix
 
 1. SSH to the HAOS host (or use the Terminal & SSH add-on).

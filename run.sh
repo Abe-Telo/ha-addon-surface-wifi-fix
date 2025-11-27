@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# Ensure wireless tooling is available each boot
+if ! command -v iwconfig >/dev/null 2>&1; then
+  echo "Surface WiFi Fix: wireless tools missing, installing..."
+  apk add --no-cache wireless-tools iw >/dev/null 2>&1 \
+    && echo "Surface WiFi Fix: wireless tools installed" \
+    || echo "Surface WiFi Fix: failed to install wireless tools"
+fi
+
 IFACE_DEFAULT="wlp3s0"
 IFACE="${WIFI_INTERFACE:-${IFACE_DEFAULT}}"
 

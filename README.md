@@ -20,6 +20,8 @@ The add-on lives in `surface_wifi_fix/` and includes:
 5. On the add-on page, enable **Start on boot** and optionally enable **Watchdog**.
 6. Click **Start** to apply the fix.
 
+> **Tip:** The add-on will only appear in the store if your Home Assistant hardware matches one of the supported architectures (AMD64, AArch64, ARMv7, or ARMhf). Make sure your system is on one of these platforms when browsing the repository.
+
 ## Verifying the Fix
 
 1. SSH to the HAOS host (or use the Terminal & SSH add-on).

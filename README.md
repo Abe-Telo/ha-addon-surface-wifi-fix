@@ -2,6 +2,11 @@
 
 This repository now follows the Home Assistant core component layout (see [`homeassistant/components/blink`](https://github.com/home-assistant/core/tree/dev/homeassistant/components/blink) for a reference). The integration lives under `custom_components/surface_wifi_fix/` so it can be dropped directly into your Home Assistant configuration or added through HACS as a custom repository.
 
+## Canonical integration location
+- **Use only** `custom_components/surface_wifi_fix/` for the integration package. HACS expects this structure and will install the files to `/config/custom_components/surface_wifi_fix/`.
+- The repository no longer carries duplicate root-level integration files (e.g., `__init__.py`, `manifest.json`, `strings.json`, `translations/`). If you see copies at the repository root, delete them—they are unused and can confuse Home Assistant when adding the integration.
+- When manually installing, ensure there is **no second copy** of the integration at the repository root or under any other directory. Home Assistant will only load the package from `custom_components/`.
+
 ## What it does
 - Disables Wi-Fi power saving on Microsoft Surface devices by issuing `iw`/`iwconfig` commands for the configured interface (default: `wlp3s0`).
 - Exposes an admin-only service **`surface_wifi_fix.disable_power_save`** so you can re-run the commands on demand or target a different interface temporarily.
@@ -20,5 +25,5 @@ This repository now follows the Home Assistant core component layout (see [`home
 Call `surface_wifi_fix.disable_power_save` from **Developer Tools → Services**. Optionally pass `interface: <name>` to override the configured interface for a single run.
 
 ## Repository layout
-- `custom_components/surface_wifi_fix/` — Home Assistant integration package following the same layout as core components.
-- `surface_wifi_fix/` — Legacy Supervisor add-on assets (retained for reference; the new integration supersedes the add-on for applying the Wi-Fi fix from inside Home Assistant).
+- `custom_components/surface_wifi_fix/` — Home Assistant integration package following the same layout as core components (canonical location for HACS installs).
+- Legacy Supervisor add-on assets are no longer included; the integration now provides the supported path for applying the Wi-Fi fix from inside Home Assistant.

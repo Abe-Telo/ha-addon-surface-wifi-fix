@@ -11,14 +11,13 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_INTERFACE
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.service import async_register_admin_service
 from homeassistant.helpers.typing import ConfigType
 
-from .const import ATTR_INTERFACE, DEFAULT_INTERFACE, DOMAIN, SERVICE_DISABLE_POWER_SAVE
+from .const import ATTR_INTERFACE, CONF_INTERFACE, DEFAULT_INTERFACE, DOMAIN, SERVICE_DISABLE_POWER_SAVE
 
 _LOGGER = logging.getLogger(__name__)
 

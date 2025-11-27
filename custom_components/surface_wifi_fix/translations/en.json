@@ -1,0 +1,37 @@
+{
+  "title": "Surface WiFi Fix",
+  "config": {
+    "step": {
+      "user": {
+        "title": "Configure Surface WiFi Fix",
+        "description": "Select the WiFi interface to configure on your Surface device.",
+        "data": {
+          "interface": "WiFi interface"
+        }
+      }
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Surface WiFi Fix options",
+        "description": "Update the WiFi interface used to disable power saving.",
+        "data": {
+          "interface": "WiFi interface"
+        }
+      }
+    }
+  },
+  "services": {
+    "disable_power_save": {
+      "name": "Disable WiFi power saving",
+      "description": "Re-run the WiFi power-save disable commands for the configured interface.",
+      "fields": {
+        "interface": {
+          "name": "Interface",
+          "description": "WiFi interface to target (overrides the configured interface for this call)."
+        }
+      }
+    }
+  }
+}

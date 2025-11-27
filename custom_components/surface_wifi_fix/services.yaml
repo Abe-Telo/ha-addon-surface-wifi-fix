@@ -1,0 +1,12 @@
+# Service definitions for Surface WiFi Fix
+
+disable_power_save:
+  name: Disable WiFi power saving
+  description: Re-run the WiFi power-save disable commands for the configured interface.
+  fields:
+    interface:
+      name: Interface
+      description: WiFi interface to target (overrides the configured interface for this call).
+      example: wlp3s0
+      selector:
+        text:

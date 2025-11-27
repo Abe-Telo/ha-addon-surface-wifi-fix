@@ -11,14 +11,13 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_INTERFACE
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.service import async_register_admin_service
 from homeassistant.helpers.typing import ConfigType
 
-from .const import ATTR_INTERFACE, DEFAULT_INTERFACE, DOMAIN, SERVICE_DISABLE_POWER_SAVE
+from .const import ATTR_INTERFACE, CONF_INTERFACE, DEFAULT_INTERFACE, DOMAIN, SERVICE_DISABLE_POWER_SAVE
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,7 +37,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {CONF_INTERFACE: interface}
 
+    _LOGGER.info("Setting up Surface WiFi Fix for interface %s", interface)
+
     if not hass.services.has_service(DOMAIN, SERVICE_DISABLE_POWER_SAVE):
+        _LOGGER.debug("Registering %s.%s admin service", DOMAIN, SERVICE_DISABLE_POWER_SAVE)
         async_register_admin_service(
             hass,
             DOMAIN,
@@ -48,9 +50,11 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         )
 
     interface = entry.options.get(CONF_INTERFACE, entry.data.get(CONF_INTERFACE, DEFAULT_INTERFACE))
+    _LOGGER.debug("Applying WiFi power-save fix during setup for %s", interface)
     await _async_disable_power_save(hass, interface)
 
     entry.async_on_unload(entry.add_update_listener(_async_reload_entry))
+    _LOGGER.debug("Surface WiFi Fix setup complete for entry %s", entry.entry_id)
     return True
 
 
@@ -70,6 +74,7 @@ async def _async_reload_entry(hass: HomeAssistant, entry: ConfigEntry) -> None:
 
     interface = entry.options.get(CONF_INTERFACE, entry.data.get(CONF_INTERFACE, DEFAULT_INTERFACE))
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {CONF_INTERFACE: interface}
+    _LOGGER.info("Reloading Surface WiFi Fix entry %s for interface %s", entry.entry_id, interface)
     await _async_disable_power_save(hass, interface)
 
 
@@ -80,6 +85,7 @@ async def _async_handle_disable_service(hass: HomeAssistant, call: ServiceCall) 
     if not interface:
         raise HomeAssistantError("No interface configured for Surface WiFi Fix.")
 
+    _LOGGER.info("Manual disable_power_save service invoked for interface %s", interface)
     await _async_disable_power_save(hass, interface)
 
 
@@ -101,8 +107,10 @@ async def _async_disable_power_save(hass: HomeAssistant, interface: str) -> None
         raise HomeAssistantError("WiFi interface is required to disable power saving.")
 
     try:
+        _LOGGER.info("Disabling WiFi power saving on %s", interface)
         await hass.async_add_executor_job(_disable_power_save, interface)
     except (HomeAssistantError, subprocess.CalledProcessError, FileNotFoundError, subprocess.TimeoutExpired) as err:
+        _LOGGER.error("Failed to disable power saving on %s: %s", interface, err)
         raise HomeAssistantError(f"Failed to disable power saving on {interface}: {err}") from err
 
 
@@ -124,7 +132,11 @@ def _disable_power_save(interface: str) -> None:
             continue
 
         _LOGGER.debug("Running WiFi power-save command: %s", " ".join(cmd))
-        subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=15)
+        process = subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=15)
+        if process.stdout:
+            _LOGGER.debug("%s output: %s", executable, process.stdout.strip())
+        if process.stderr:
+            _LOGGER.debug("%s errors: %s", executable, process.stderr.strip())
         available_commands += 1
 
     if available_commands == 0:

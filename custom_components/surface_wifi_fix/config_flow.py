@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+
 import voluptuous as vol
 
 from homeassistant import config_entries
@@ -9,6 +11,9 @@ from homeassistant.data_entry_flow import FlowResult
 import homeassistant.helpers.config_validation as cv
 
 from .const import CONF_INTERFACE, DEFAULT_INTERFACE, DOMAIN
+
+
+_LOGGER = logging.getLogger(__name__)
 
 
 class SurfaceWiFiFixConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
@@ -20,6 +25,7 @@ class SurfaceWiFiFixConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         """Initialize the config flow."""
 
         self._interface: str = DEFAULT_INTERFACE
+        _LOGGER.debug("Surface WiFi Fix config flow initialized with default interface %s", self._interface)
 
     async def async_step_user(self, user_input: dict | None = None) -> FlowResult:
         """Handle the initial step."""
@@ -29,6 +35,7 @@ class SurfaceWiFiFixConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             interface: str = user_input[CONF_INTERFACE]
             self._interface = interface
+            _LOGGER.info("Creating Surface WiFi Fix entry for interface %s", interface)
             return self.async_create_entry(title="Surface WiFi Fix", data={CONF_INTERFACE: interface})
 
         return self.async_show_form(
@@ -67,6 +74,10 @@ class SurfaceWiFiFixOptionsFlow(config_entries.OptionsFlow):
         errors: dict[str, str] = {}
 
         if user_input is not None:
+            _LOGGER.info(
+                "Updating Surface WiFi Fix options for interface %s",
+                user_input.get(CONF_INTERFACE, self.config_entry.options.get(CONF_INTERFACE)),
+            )
             return self.async_create_entry(title="Surface WiFi Fix", data=user_input)
 
         return self.async_show_form(

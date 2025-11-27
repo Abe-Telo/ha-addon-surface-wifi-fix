@@ -11,19 +11,14 @@ from typing import Any
 import voluptuous as vol
 
 from homeassistant.config_entries import ConfigEntry
+from homeassistant.const import CONF_INTERFACE
 from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.service import async_register_admin_service
 from homeassistant.helpers.typing import ConfigType
 
-from .const import (
-    ATTR_INTERFACE,
-    CONF_INTERFACE,
-    DEFAULT_INTERFACE,
-    DOMAIN,
-    SERVICE_DISABLE_POWER_SAVE,
-)
+from .const import ATTR_INTERFACE, DEFAULT_INTERFACE, DOMAIN, SERVICE_DISABLE_POWER_SAVE
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -52,6 +47,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
             schema=SERVICE_SCHEMA,
         )
 
+    interface = entry.options.get(CONF_INTERFACE, entry.data.get(CONF_INTERFACE, DEFAULT_INTERFACE))
     await _async_disable_power_save(hass, interface)
 
     entry.async_on_unload(entry.add_update_listener(_async_reload_entry))

@@ -15,10 +15,19 @@ The add-on lives in `surface_wifi_fix/` and includes:
 
 1. In Home Assistant, open **Settings → Add-ons → Add-on Store**.
 2. Click the three dots (⋮) → **Repositories**.
-3. Add this repository URL: `https://github.com/YOUR_GITHUB/ha-addon-surface-wifi-fix`.
+3. Add this repository URL: `https://github.com/Abe-Telo/ha-addon-surface-wifi-fix`.
 4. After the repository refreshes, install **Surface WiFi Fix**.
 5. On the add-on page, enable **Start on boot** and optionally enable **Watchdog**.
 6. Click **Start** to apply the fix.
+
+> **Tip:** The add-on will only appear in the store if your Home Assistant hardware matches one of the supported architectures (AMD64, AArch64, ARMv7, or ARMhf). Make sure your system is on one of these platforms when browsing the repository. Intel-based 64-bit CPUs (like the Surface Book 1) use the AMD64 architecture and are supported. If the add-on list looks empty after adding the repository, click the **⋮ → Reload** option in the Add-on Store to refresh.
+
+### Troubleshooting visibility
+
+- Confirm the repository URL is exactly `https://github.com/Abe-Telo/ha-addon-surface-wifi-fix` in **Settings → Add-ons → Add-on Store → ⋮ → Repositories**.
+- Use **⋮ → Reload** in the Add-on Store after adding the repository to force a refresh.
+- Check **Settings → System → Logs → Supervisor** for repository sync errors; retries can take a couple of minutes if your internet connection is slow.
+- The add-on uses multi-architecture build settings so it should render in the list once the repository sync succeeds.
 
 ## Verifying the Fix
 

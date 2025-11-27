@@ -13,6 +13,8 @@ fi
 
 echo "Surface WiFi Fix: starting up, target interface: ${IFACE}"
 
+FOUND=0
+
 # Try up to 10 times (about 50s) to find the WiFi interface
 for i in $(seq 1 10); do
   if iw dev "${IFACE}" info >/dev/null 2>&1; then
@@ -26,6 +28,7 @@ for i in $(seq 1 10); do
       && echo "Surface WiFi Fix: iwconfig power off applied" \
       || echo "Surface WiFi Fix: power off not supported via iwconfig"
 
+    FOUND=1
     break
   else
     echo "Surface WiFi Fix: ${IFACE} not found yet (attempt ${i}/10), retrying in 5s..."
@@ -33,6 +36,11 @@ for i in $(seq 1 10); do
   fi
 
 done
+
+if [ "${FOUND}" -ne 1 ]; then
+  echo "Surface WiFi Fix: ERROR: interface ${IFACE} not detected after 10 attempts; exiting so Supervisor registers failure." >&2
+  exit 1
+fi
 
 # Keep container running so Supervisor sees it as 'running'
 echo "Surface WiFi Fix: entering idle loop (tail -f /dev/null)"

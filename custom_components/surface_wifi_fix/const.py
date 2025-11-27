@@ -5,4 +5,5 @@ from __future__ import annotations
 DOMAIN = "surface_wifi_fix"
 DEFAULT_INTERFACE = "wlp3s0"
 SERVICE_DISABLE_POWER_SAVE = "disable_power_save"
-ATTR_INTERFACE = "interface"
+CONF_INTERFACE = "interface"
+ATTR_INTERFACE = CONF_INTERFACE

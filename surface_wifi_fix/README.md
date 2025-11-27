@@ -4,7 +4,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 
 ## How It Works
 
-- Builds from the Supervisor-provided base image for your architecture (`ghcr.io/home-assistant/{arch}-base:16.3`, defined in `build.json`) and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
+- Builds from the Supervisor-provided base image for your architecture (`ghcr.io/home-assistant/{arch}-base:3.19`, defined in `build.json`) and installs `iw`, `wireless-tools`, `ethtool`, and `busybox-extras` at image build time.
 - Runs `run.sh` at startup, which waits for the Wi-Fi interface, applies `iw dev <iface> set power_save off` and `iwconfig <iface> power off`, then stays running.
 - Uses `host_network: true` and `NET_ADMIN` privileges so it can manage the host Wi-Fi interface from inside the add-on container.
 

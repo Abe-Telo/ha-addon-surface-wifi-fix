@@ -114,10 +114,22 @@ def _disable_power_save(interface: str) -> None:
         ("iwconfig", ["iwconfig", interface, "power", "off"]),
     ]
 
+    available_commands = 0
     for executable, cmd in commands:
         if not shutil.which(executable):
-            raise HomeAssistantError(f"{executable} is not available in the container.")
+            _LOGGER.warning(
+                "Skipping WiFi power-save command because %s is not available in the container.",
+                executable,
+            )
+            continue
 
         _LOGGER.debug("Running WiFi power-save command: %s", " ".join(cmd))
         subprocess.run(cmd, check=True, capture_output=True, text=True, timeout=15)
+        available_commands += 1
+
+    if available_commands == 0:
+        _LOGGER.warning(
+            "Surface WiFi Fix could not run because neither iw nor iwconfig is installed. "
+            "Install wireless tools on the host or container to allow the integration to disable WiFi power saving."
+        )
 

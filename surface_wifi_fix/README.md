@@ -15,7 +15,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 
 ## Installation
 
-1. Add this repository to Home Assistant: **Settings → Add-ons → Add-on Store → ⋮ → Repositories** → `https://github.com/YOUR_GITHUB/ha-addon-surface-wifi-fix`.
+1. Add this repository to Home Assistant: **Settings → Add-ons → Add-on Store → ⋮ → Repositories** → `https://github.com/Abe-Telo/ha-addon-surface-wifi-fix`.
 2. Install **Surface WiFi Fix** from the add-on list.
 3. Enable **Start on boot** and optionally **Watchdog**.
 4. Click **Start**.

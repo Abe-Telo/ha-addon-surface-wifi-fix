@@ -7,7 +7,7 @@ This repository now follows the Home Assistant core component layout (see [`home
 - Exposes an admin-only service **`surface_wifi_fix.disable_power_save`** so you can re-run the commands on demand or target a different interface temporarily.
 
 ## Installation
-1. Copy the `custom_components/surface_wifi_fix/` directory into your Home Assistant `config/custom_components/` folder (the same structure Home Assistant Core uses for integrations like Blink or SmartThings), or add this repository as a custom HACS source and install it.
+1. Copy the `custom_components/surface_wifi_fix/` directory into your Home Assistant `config/custom_components/` folder (the same structure Home Assistant Core uses for integrations like Blink or SmartThings), or add this repository as a custom HACS source (type **Integration**) and install it. HACS will place the files at `/config/custom_components/surface_wifi_fix/`.
 2. Restart Home Assistant.
 3. Go to **Settings → Devices & Services → + Add Integration** and pick **Surface WiFi Fix**.
 4. Enter the Wi-Fi interface name (default `wlp3s0`) and finish the flow. The integration immediately applies the power-save fix for that interface and registers the service.

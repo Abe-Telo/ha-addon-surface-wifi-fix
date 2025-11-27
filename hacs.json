@@ -1,0 +1,8 @@
+{
+  "name": "Surface WiFi Fix",
+  "domains": ["surface_wifi_fix"],
+  "country": "US",
+  "homeassistant": "2023.9.0",
+  "content_in_root": false,
+  "render_readme": true
+}

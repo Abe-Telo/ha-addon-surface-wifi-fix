@@ -1,4 +1,6 @@
-# Surface WiFi Fix Add-on
+# Surface WiFi Fix Add-on (legacy)
+
+> **Note:** The repository now ships a Home Assistant integration under `custom_components/surface_wifi_fix/` (matching the core component layout). This add-on directory is retained for reference; the integration is the recommended way to apply the Wi-Fi power-save fix from within Home Assistant itself.
 
 This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface devices (interface `wlp3s0` by default) to reduce random disconnects and timeouts.
 
@@ -34,3 +36,14 @@ If the repository syncs but you still do not see the add-on, use **⋮ → Reloa
 - `Dockerfile` — Base image and tool installation.
 - `build.json` — Architecture-specific base images supplied to the Docker build.
 - `run.sh` — Wi-Fi power-save disable script with retry loop and idle tail.
+
+## Assets
+
+The Supervisor UI icon and logo live in `icon.png` and `logo.png` respectively.
+If you need to download them without pushing binaries, decode the included Base64
+files:
+
+```bash
+base64 -d surface_wifi_fix/icon_base64.txt > surface_wifi_fix/icon.png
+base64 -d surface_wifi_fix/logo_base64.txt > surface_wifi_fix/logo.png
+```

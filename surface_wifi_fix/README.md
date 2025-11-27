@@ -11,7 +11,7 @@ This Home Assistant Supervisor add-on disables Wi-Fi power saving on Surface dev
 ## Configuration
 
 - Defaults to interface `wlp3s0`.
-- Override the interface by setting the `WIFI_INTERFACE` environment variable in the add-on options.
+- Override the interface by setting the **wifi_interface** option in the add-on configuration UI (persisted in `/data/options.json`).
 
 ## Installation
 

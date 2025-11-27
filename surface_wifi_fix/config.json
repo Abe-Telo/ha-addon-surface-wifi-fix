@@ -3,7 +3,12 @@
   "version": "1.0.0",
   "slug": "surface_wifi_fix",
   "description": "Disables WiFi power saving on Surface devices running HAOS",
-  "arch": ["amd64"],
+  "arch": [
+    "amd64",
+    "aarch64",
+    "armv7",
+    "armhf"
+  ],
   "startup": "services",
   "boot": "auto",
   "host_network": true,
